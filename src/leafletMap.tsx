@@ -4,6 +4,8 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import {iconMappings, townMarker} from "./constantes";
+import SearchBar from './searchBar';
+import { HandleSearch } from './searchBar';
 
 
 
@@ -28,9 +30,10 @@ const LeafletMap=()=>{
         setSelectedType(e.target.value);
     };
 
-    console.log("filtered Markers ",filteredMarkers);
+    
     return (
         <section className='info-carte'>
+            
             <div>
                 <label htmlFor='filter'>Filtrer par : </label>
                 <select id='filter' onChange={handleTypeChange} value={selectedType}>
@@ -38,22 +41,27 @@ const LeafletMap=()=>{
                     <option key={type} value={type}>{type}</option> ))}
                 </select>
             </div>
+           
+        
+           
+           
+           
             <MapContainer 
             center={mapCenter}
             zoom={13}
             style={{height:"500px",width:"500px"}}>
+                <SearchBar onSearch={HandleSearch}/>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; 
                     <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-/>  
+/>              
+                
                 <Marker position={mapCenter} icon={getCustomIcon('town')}>
                     <Popup>My bled</Popup>
                 </Marker>
                 <MarkerClusterGroup>
-                    <Marker position={[46.240,3.64728]} icon={getCustomIcon('village')}>
-                        <Popup>Marqueur statique</Popup>
-                    </Marker>
+                    
                     {filteredMarkers.map((city,index)=>(
                         <Marker
                         key={index}
@@ -68,7 +76,9 @@ const LeafletMap=()=>{
                     ))}
                 </MarkerClusterGroup>
             </MapContainer>
+            
         </section>
+        
     );
 }
 

@@ -13,7 +13,6 @@ const LeafletMap=()=>{
     const [selectedType, setSelectedType]=useState("Tous");
 
     const getCustomIcon=(type:string)=>{
-        console.log("icone pour le type ",type,iconMappings[type])
         const options=iconMappings[type]||iconMappings.town;
         return new L.Icon({
             iconUrl:options.iconUrl,
@@ -26,11 +25,10 @@ const LeafletMap=()=>{
     );
     const handleTypeChange=(e:React.ChangeEvent<HTMLSelectElement>)=>{
 
-        console.log("type select ", e.target.value);
         setSelectedType(e.target.value);
     };
 
-
+    console.log("filtered Markers ",filteredMarkers);
     return (
         <section className='info-carte'>
             <div>
@@ -53,7 +51,10 @@ const LeafletMap=()=>{
                     <Popup>My bled</Popup>
                 </Marker>
                 <MarkerClusterGroup>
-                    {filteredMarkers.map((city,index)=>{
+                    <Marker position={[46.240,3.64728]} icon={getCustomIcon('village')}>
+                        <Popup>Marqueur statique</Popup>
+                    </Marker>
+                    {filteredMarkers.map((city,index)=>(
                         <Marker
                         key={index}
 
@@ -64,7 +65,7 @@ const LeafletMap=()=>{
                                 {city.description.startsWith("http")?(<a href={city.description} target='_blank' rel='noopener noreferrer'>Visiter le site</a>):(city.description)}
                             </Popup>
                         </Marker>
-                    })}
+                    ))}
                 </MarkerClusterGroup>
             </MapContainer>
         </section>

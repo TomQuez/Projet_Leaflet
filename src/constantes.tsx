@@ -1,7 +1,22 @@
-export const townMarker=[
+interface IconOptions{
+    iconUrl:string;
+    iconSize:[number,number];
+}
+interface IconMapping{
+    [key:string]:IconOptions;
+}
+
+
+interface TownMarker{
+    name:string,
+    coordinates:[number,number],
+    type:string,
+    description:string
+}
+export const townMarker:TownMarker[]=[
     {
         name:"Lapalisse",
-        coodinates:[46.2401,3.6339],
+        coordinates:[46.2401,3.6339],
         type:"town",
         description:"peacefull town"
     },
@@ -19,7 +34,7 @@ export const townMarker=[
     },
 ];
 
-export const iconMappings={
+export const iconMappings : IconMapping={
     town:{
         iconUrl:"../icon/town.png",
         iconSize:[38,38],
